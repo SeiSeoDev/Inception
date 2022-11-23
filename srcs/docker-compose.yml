@@ -4,7 +4,7 @@ services:
   db:
     image: mariadb:10.3
     volumes:
-      - ${PWD}/mariadb/:/var/lib/mysql/
+      - mysql-data:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: somewordpress
@@ -28,4 +28,15 @@ services:
       - ./wp-content:/var/www/html/wp-content
       - ./uploads.ini:/usr/local/etc/php/conf.d/uploads.ini
 volumes:
-  db_data:
+  mysql-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/vagrant/data/mysql-data
+      o: bind
+  wordpress-data:
+    driver: local
+    driver_opts:
+      type: none
+      device: /home/vagrant/data/wordpress-data
+      o: bind
